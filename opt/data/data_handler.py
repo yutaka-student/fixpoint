@@ -205,14 +205,20 @@ class data_handler():
                 masked_address = data_handler.get_masked_address(address, each_address_data[address][i][1])
                 if len(failure_subnet_list[masked_address]) == 0:
                     data_handler.append_list_on_dictionary(result_data, address, each_address_data[address][i])
+                    continue
+                is_belong = False
                 for subnet_data in failure_subnet_list[masked_address]:
                     if len(subnet_data) == 1:
                         begin_failure = subnet_data[0][0]
-                        if each_address_data[address][i][0] < begin_failure:
-                            data_handler.append_list_on_dictionary(result_data, address, each_address_data[address][i])
+                        if each_address_data[address][i][0] >= begin_failure:
+                            is_belong = True
+                            break
                     elif len(subnet_data) == 2:
                         begin_failure = subnet_data[0][0]
                         end_failure = subnet_data[1][0]
-                        if not (each_address_data[address][i][0] >= begin_failure and each_address_data[address][i][0] < end_failure):
-                            data_handler.append_list_on_dictionary(result_data, address, each_address_data[address][i])
+                        if each_address_data[address][i][0] >= begin_failure and each_address_data[address][i][0] < end_failure:
+                            is_belong = True
+                            break
+                if not is_belong:
+                    data_handler.append_list_on_dictionary(result_data, address, each_address_data[address][i])
         return result_data
