@@ -80,7 +80,11 @@ bash run.sh
 cd /root/opt/question4/
 bash run.sh
 ```
- 
+使用後は、exitで仮想環境を抜け、以下のコマンドで終了します。
+```bash
+docker-compose down
+```
+
 # 実行結果
 それぞれの課題の実行結果は以下のようになった
 ## 課題1
